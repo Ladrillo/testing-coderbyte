@@ -45,8 +45,32 @@ describe('firstReverse function', function () {
 // Using the JavaScript language, have the function firstFactorial(num) take the num parameter being passed and return the factorial of it (ie. if num = 4, return (4 * 3 * 2 * 1)). For the test cases, the range will be between 1 and 18.
 
 function firstFactorial(num) {
-
-  // code goes here
-  return num;
-
+    if (typeof num !== 'number') {
+        throw "error: this function only works with numbers!"
+    }
+    else if (num < 0) {
+        throw "error: this function doesn't work with negative numbers"
+    }
+    else {
+        if (num === 0 || num === 1) return 1;
+        else return num * firstFactorial(num - 1);
+    }
 }
+
+describe('firstFactorial function', function () {
+    it('should return 1 if given 0', function (){
+        expect(firstFactorial(0)).to.be.equal(1);
+    });
+
+    it('should return 1 if given 1', function (){
+        expect(firstFactorial(1)).to.be.equal(1);
+    });
+
+    it('should return 2 if given 2', function (){
+        expect(firstFactorial(2)).to.be.equal(2);
+    });
+
+    it('should return 120 if given 5', function () {
+        expect(firstFactorial(5)).to.be.equal(120);
+    });
+});
