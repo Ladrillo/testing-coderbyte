@@ -81,12 +81,11 @@ describe('firstFactorial function', function () {
 function longestWord(sen) {
     if (typeof sen !== 'string') throw 'error: incorrect argument';
     else if (sen === '') throw 'error: string empty';
-    else {
-        var splitSen = sen.split(/\W/);
-        return splitSen.reduce(function (acc, e) {
-            return acc.length >= e.length ? acc : e;
-        });
-    }
+
+    var splitSen = sen.split(/\W/);
+    return splitSen.reduce(function (acc, e) {
+        return acc.length >= e.length ? acc : e;
+    });
 }
 
 describe('longestWord function', function () {
@@ -117,16 +116,24 @@ describe('longestWord function', function () {
 
 function letterChanges(str) {
     if (typeof str !== 'string') throw 'error: incorrect argument';
-    else {
-        var letters = ['abcdefghijklmnñopqrstuvwxyza'];
-        var splitLetters = letters.split('');
-        for (var i = 0; i < str.length; i++) {
-            
 
+    var letters = 'abcdefghijklmnñopqrstuvwxyza',
+        splitLetters = letters.split(''),
+        splitStr = str.toLowerCase().split('');
 
+    for (var i = 0; i < str.length; i++) {
+        var idx = splitLetters.indexOf(splitStr[i]);
+        if (idx !== -1) {
+            splitStr[i] = splitLetters[idx + 1];
+        }
+        if (splitStr[i].search(/[aeiou]/) !== -1) {
+            splitStr[i] = splitStr[i].toUpperCase();
         }
     }
+    return splitStr.join('');
 }
+
+
 
 describe('function letterChanges', function () {
     it('should return a string', function () {
@@ -134,15 +141,15 @@ describe('function letterChanges', function () {
     });
 
     it('should replace every letter with the following letter in the alphabet', function () {
-        expect(letterChanges('abc')).to.equal('bcd');
+        expect(letterChanges('Abc')).to.equal('bcd');
     });
 
     it('should work with the empty string', function () {
         expect(letterChanges('')).to.equal('');
     });
 
-    it('should work with a string with spaces', function () {
-        expect(letterChanges('abc cba')).to.equal('bcd dcb');
+    it('should work on a string with spaces', function () {
+        expect(letterChanges('aBc cbA')).to.equal('bcd dcb');
     });
 
     it('should capitalize vowels', function () {
