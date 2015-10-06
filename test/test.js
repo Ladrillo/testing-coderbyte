@@ -19,7 +19,7 @@ function firstReverse(str) {
 
 describe('firstReverse function', function () {
     it('should return a string', function () {
-        expect(firstReverse('pene')).to.be.a('string');
+        expect(firstReverse('cosa')).to.be.a('string');
     });
 
     it('should return as is the zero-length string', function () {
@@ -79,13 +79,14 @@ describe('firstFactorial function', function () {
 // Using the JavaScript language, have the function longestWord(sen) take the sen parameter being passed and return the largest word in the string. If there are two or more words that are the same length, return the first word from the string with that length. Ignore punctuation and assume sen will not be empty.
 
 function longestWord(sen) {
-    if (typeof sen !== 'string') throw 'error: incorrect type';
+    if (typeof sen !== 'string') throw 'error: incorrect argument';
     else if (sen === '') throw 'error: string empty';
     else {
         var splitSen = sen.split(/\W/);
-
+        return splitSen.reduce(function (acc, e) {
+            return acc.length >= e.length ? acc : e;
+        });
     }
-    return splitSen.join('');
 }
 
 describe('longestWord function', function () {
@@ -95,11 +96,56 @@ describe('longestWord function', function () {
 
     it('should ignore punctuation', function () {
         expect(longestWord('aaa.')).to.equal('aaa');
+        expect(longestWord('aa.. aaa')).to.equal('aaa');
     });
 
     it('should return the longest word when all words unequal', function () {
         expect(longestWord('a aa aaa')).to.equal('aaa');
         expect(longestWord('aaa aa a')).to.equal('aaa');
         expect(longestWord('a aaa aa')).to.equal('aaa');
+    });
+
+    it('should return the first longest word', function () {
+        expect(longestWord('aa aaa bbb ccc b')).to.equal('aaa');
+    });
+});
+
+
+
+// Using the JavaScript language, have the function letterChanges(str) take the str parameter being passed and modify it using the following algorithm. Replace every letter in the string with the letter following it in the alphabet (ie. c becomes d, z becomes a). Then capitalize every vowel in this new string (a, e, i, o, u) and finally return this modified string.
+
+
+function letterChanges(str) {
+    if (typeof str !== 'string') throw 'error: incorrect argument';
+    else {
+        var letters = ['abcdefghijklmnñopqrstuvwxyza'];
+        var splitLetters = letters.split('');
+        for (var i = 0; i < str.length; i++) {
+            
+
+
+        }
+    }
+}
+
+describe('function letterChanges', function () {
+    it('should return a string', function () {
+        expect(letterChanges('cosa')).to.be.a('string');
+    });
+
+    it('should replace every letter with the following letter in the alphabet', function () {
+        expect(letterChanges('abc')).to.equal('bcd');
+    });
+
+    it('should work with the empty string', function () {
+        expect(letterChanges('')).to.equal('');
+    });
+
+    it('should work with a string with spaces', function () {
+        expect(letterChanges('abc cba')).to.equal('bcd dcb');
+    });
+
+    it('should capitalize vowels', function () {
+        expect(letterChanges('z')).to.equal('A');
     });
 });
