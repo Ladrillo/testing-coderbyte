@@ -224,7 +224,7 @@ function simpleSymbols(str) {
     }
 
     var acceptable = splitString.every(function (e, i, arr) {
-        return !/[a-zA-Z]/.test(e) || (/[a-zA-Z]/.test(e) && /\+/.test(arr[i-1]) && /\+/.test(arr[i+1]));
+        return !/[a-zA-Z]/.test(e) || (/[a-zA-Z]/.test(e) && /\+/.test(arr[i - 1]) && /\+/.test(arr[i + 1]));
     });
     return acceptable ? 'true' : 'false';
 }
@@ -249,5 +249,37 @@ describe('function simpleSymbols', function () {
 
     it('should return "false" if all letters are not followed by + signs', function () {
         expect(simpleSymbols('+a=+a+')).to.equal('false');
+    });
+});
+
+
+
+// Using the JavaScript language, have the function checkNums(num1,num2) take both parameters being passed and return the string true if num2 is greater than num1, otherwise return the string false. If the parameter values are equal to each other then return the string -1.
+
+function checkNums(num1, num2) {
+    if (typeof num1 !== 'number' || typeof num2 !== 'number') {
+        throw 'error: at least one parameter is of incorrect type';
+    }
+    else if (num1 % 1 !== 0 || num2 % 1 !== 0) {
+        throw 'error: at least one parameter is not an integer'
+    }
+
+    if (num2 > num1) return 'true';
+    else if (num2 < num1) return 'false';
+    else if (num2 === num1) return '-1';
+}
+
+
+describe('functin checkNums', function () {
+    it('should return the string "true" if num2 > num1', function () {
+        expect(checkNums(1, 2)).to.be.equal('true');
+    });
+
+    it('should return the string "false" if num2 < num1', function () {
+        expect(checkNums(2, 1)).to.be.equal('false');
+    });
+
+    it('should return the string "-1" if num2 === num1', function () {
+        expect(checkNums(1, 1)).to.be.equal('-1');
     });
 });
