@@ -213,9 +213,41 @@ describe('function letterCapitalize', function () {
 
 // Using the JavaScript language, have the function simpleSymbols(str) take the str parameter being passed and determine if it is an acceptable sequence by either returning the string true or false. The str parameter will be composed of + and = symbols with several letters between them (ie. ++d+===+c++==a) and for the string to be true each letter must be surrounded by a + symbol. So the string to the left would be false. The string will not be empty and will have at least one letter.
 
-function SimpleSymbols(str) {
+function simpleSymbols(str) {
+    if (typeof str !== 'string' || !/[a-zA-Z]/.test(str)) {
+        throw 'error: please pass at least one letter';
+    }
 
-  // code goes here
-  return str;
+    var splitString = str.split('');
+    if (/[a-zA-Z]/.test(splitString[0]) || /[a-zA-Z]/.test(splitString[splitString.length - 1])) {
+        return 'false';
+    }
 
+    var acceptable = splitString.every(function (e, i, arr) {
+        return !/[a-zA-Z]/.test(e) || (/[a-zA-Z]/.test(e) && /\+/.test(arr[i-1]) && /\+/.test(arr[i+1]));
+    });
+    return acceptable ? 'true' : 'false';
 }
+
+
+describe('function simpleSymbols', function () {
+    it('should return "false" if the first character is a letter', function () {
+        expect(simpleSymbols('a+')).to.equal('false');
+    });
+
+    it('should return "false" if the last character is a letter', function () {
+        expect(simpleSymbols('+a')).to.equal('false');
+    });
+
+    it('should return "true" if all letters are preceded and followed by + signs', function () {
+        expect(simpleSymbols('+a+=+a+')).to.equal('true');
+    });
+
+    it('should return "false" if all letters are not preceded by + signs', function () {
+        expect(simpleSymbols('+a+=a+')).to.equal('false');
+    });
+
+    it('should return "false" if all letters are not followed by + signs', function () {
+        expect(simpleSymbols('+a=+a+')).to.equal('false');
+    });
+});
