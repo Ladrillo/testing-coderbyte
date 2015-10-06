@@ -17,6 +17,7 @@ function firstReverse(str) {
     return reversed.join('');
 }
 
+
 describe('firstReverse function', function () {
     it('should return a string', function () {
         expect(firstReverse('cosa')).to.be.a('string');
@@ -56,6 +57,7 @@ function firstFactorial(num) {
     }
 }
 
+
 describe('firstFactorial function', function () {
     it('should return 1 if given 0', function () {
         expect(firstFactorial(0)).to.be.equal(1);
@@ -87,6 +89,7 @@ function longestWord(sen) {
         return acc.length >= e.length ? acc : e;
     });
 }
+
 
 describe('longestWord function', function () {
     it('should return a string', function () {
@@ -134,7 +137,6 @@ function letterChanges(str) {
 }
 
 
-
 describe('function letterChanges', function () {
     it('should return a string', function () {
         expect(letterChanges('cosa')).to.be.a('string');
@@ -156,3 +158,32 @@ describe('function letterChanges', function () {
         expect(letterChanges('z')).to.equal('A');
     });
 });
+
+
+
+// Using the JavaScript language, have the function simpleAdding(num) add up all the numbers from 1 to num. For the test cases, the parameter num will be any number from 1 to 1000.
+
+function simpleAdding(num) {
+    if (typeof num !== 'number' || num < 1 || num % 1 !== 0) {
+        throw 'error: pass a integer greater than 0'
+    }
+
+    var numbers = new Array(num);
+    for (var i = 0; i < numbers.length; i++) {
+        numbers[i] = i + 1;
+    }
+    return numbers.reduce(function (acc, e) {
+        return acc + e;
+    });
+}
+
+
+describe('function simpleAdding', function () {
+    it('should return a number', function () {
+        expect(simpleAdding(5)).to.be.a('number');
+    });
+
+    it('should add all the numbers from 1 to the argument', function () {
+        expect(simpleAdding(5)).to.equal(15);
+    });
+})
