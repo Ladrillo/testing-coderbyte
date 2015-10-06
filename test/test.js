@@ -283,3 +283,28 @@ describe('functin checkNums', function () {
         expect(checkNums(1, 1)).to.be.equal('-1');
     });
 });
+
+
+
+// Using the JavaScript language, have the function timeConvert(num) take the num parameter being passed and return the number of hours and minutes the parameter converts to (ie. if num = 63 then the output should be 1:3). Separate the number of hours and minutes with a colon.
+
+function timeConvert(num) {
+    if (typeof num !== 'number' || num % 1 !== 0) {
+        throw 'error: please pass an integer';
+    }
+
+    var hours = Math.floor(num / 60) + "";
+    var minutes = num % 60 + "";
+
+    return hours + ":" + minutes;
+}
+
+
+describe('function timeConvert', function () {
+    it('should convert integers to hours and minutes int the "h:m" format', function () {
+        expect(timeConvert(1)).to.equal('0:1');
+        expect(timeConvert(60)).to.equal('1:0');
+        expect(timeConvert(90)).to.equal('1:30');
+        expect(timeConvert(120)).to.equal('2:0');
+    });
+});
