@@ -165,7 +165,7 @@ describe('function letterChanges', function () {
 
 function simpleAdding(num) {
     if (typeof num !== 'number' || num < 1 || num % 1 !== 0) {
-        throw 'error: pass a integer greater than 0'
+        throw 'error: please pass a integer greater than 0'
     }
 
     var numbers = new Array(num);
@@ -186,4 +186,36 @@ describe('function simpleAdding', function () {
     it('should add all the numbers from 1 to the argument', function () {
         expect(simpleAdding(5)).to.equal(15);
     });
-})
+});
+
+
+
+// Using the JavaScript language, have the function letterCapitalize(str) take the str parameter being passed and capitalize the first letter of each word. Words will be separated by only one space.
+
+function letterCapitalize(str) {
+    if (typeof str !== 'string') throw 'error: please pass a string';
+
+    var processedWords = [];
+    str.split(' ').forEach(function (e) {
+        processedWords.push(e[0].toUpperCase() + e.slice(1));
+    });
+    return processedWords.join(' ');
+}
+
+
+describe('function letterCapitalize', function () {
+    it('should capitalize the first letter of each word', function () {
+        expect(letterCapitalize('esto es una mierda')).to.equal('Esto Es Una Mierda')
+    });
+});
+
+
+
+// Using the JavaScript language, have the function simpleSymbols(str) take the str parameter being passed and determine if it is an acceptable sequence by either returning the string true or false. The str parameter will be composed of + and = symbols with several letters between them (ie. ++d+===+c++==a) and for the string to be true each letter must be surrounded by a + symbol. So the string to the left would be false. The string will not be empty and will have at least one letter.
+
+function SimpleSymbols(str) {
+
+  // code goes here
+  return str;
+
+}
