@@ -332,8 +332,43 @@ describe('function alphabetSoup', function () {
     it('sorts the characters in a uppercase string alphabetically', function () {
         expect(alphabetSoup('CZBA')).to.equal('ABCZ');
     });
+});
 
-    it('sorts the characters in a mixed-case string alphabetically', function () {
-        expect(alphabetSoup('cZBa')).to.equal('aBcZ');
+
+
+// Using the JavaScript language, have the function ABCheck(str) take the str parameter being passed and return the string true if the characters a and b are separated by exactly 3 places anywhere in the string at least once (ie. "lane borrowed" would result in true because there is exactly three characters between a and b). Otherwise return the string false.
+
+function ABCheck(str) {
+    if (typeof str !== 'string') {
+        throw 'error: please pass a string';
+    }
+
+    if (str.length < 5) return 'false';
+
+    var splitStr = str.split('');
+    for (var i = 0; i < splitStr.length; i++) {
+        if (splitStr[i] === 'a' &&
+            /[^ab]/.test(splitStr[i + 1]) &&
+            /[^ab]/.test(splitStr[i + 2]) &&
+            /[^ab]/.test(splitStr[i + 3]) &&
+            splitStr[i + 4] === 'b') {
+            return 'true';
+        }
+    }
+    return 'false';
+}
+
+
+describe('function ABCheck', function () {
+    it('should return "false" if str contains less than five chars', function () {
+        expect(ABCheck('axxb')).to.equal('false');
+    });
+
+    it('should return "true" if str contains "a" and "b" separated by three chars', function () {
+        expect(ABCheck('axxxb')).to.equal('true');
+    });
+
+    it('should return "false" if str does not contain "a" and "b" separated by three chars', function () {
+        expect(ABCheck('axxxxb')).to.equal('false');
     });
 });
