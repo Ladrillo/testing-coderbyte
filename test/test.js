@@ -308,3 +308,32 @@ describe('function timeConvert', function () {
         expect(timeConvert(120)).to.equal('2:0');
     });
 });
+
+
+
+// Using the JavaScript language, have the function alphabetSoup(str) take the str string parameter being passed and return the string with the letters in alphabetical order (ie. hello becomes ehllo). Assume numbers and punctuation symbols will not be included in the string.
+
+function alphabetSoup(str) {
+    if (typeof str !== 'string') {
+        throw 'error: please pass a string';
+    }
+    else if (/[^A-Za-z]/.test(str)) {
+        throw 'error: please pass a string with no punctuation or symbols'
+    }
+
+    return str.split('').sort().join('');
+}
+
+describe('function alphabetSoup', function () {
+    it('sorts the characters in a lowercase string alphabetically', function () {
+        expect(alphabetSoup('czba')).to.equal('abcz');
+    });
+
+    it('sorts the characters in a uppercase string alphabetically', function () {
+        expect(alphabetSoup('CZBA')).to.equal('ABCZ');
+    });
+
+    it('sorts the characters in a mixed-case string alphabetically', function () {
+        expect(alphabetSoup('cZBa')).to.equal('aBcZ');
+    });
+});
