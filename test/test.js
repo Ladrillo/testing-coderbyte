@@ -372,3 +372,70 @@ describe('function ABCheck', function () {
         expect(ABCheck('axxxxb')).to.equal('false');
     });
 });
+
+
+
+// Using the JavaScript language, have the function vowelCount(str) take the str string parameter being passed and return the number of vowels the string contains (ie. "All cows eat grass" would return 5). Do not count y as a vowel for this challenge.
+
+function vowelCount(str) {
+    if (typeof str !== 'string') {
+        throw 'error: please pass a string next time'
+    }
+
+    var count = 0,
+        splitStr = str.split('');
+
+    splitStr.forEach(function (e) {
+        if (/[aeiouAEIOU]/.test(e)) {
+            count += 1;
+        }
+    });
+    return count;
+}
+
+
+describe('function vowelCount', function () {
+    it('should return 0 if there are no vowels in string', function () {
+        expect(vowelCount('xxx')).to.equal(0);
+    });
+
+    it('should return n if there are n lowercase vowels in string', function () {
+        expect(vowelCount('xaxxexioxxu')).to.equal(5);
+    });
+
+    it('should return n if there are n uppercase vowels in string', function () {
+        expect(vowelCount('xAxxExI')).to.equal(3);
+    });
+
+    it('should return n if there are n mixed-case vowels in string', function () {
+        expect(vowelCount('xAxxexI')).to.equal(3);
+    });
+});
+
+
+// Using the JavaScript language, have the function wordCount(str) take the str string parameter being passed and return the number of words the string contains (ie. "Never eat shredded wheat" would return 4). Words will be separated by single spaces.
+
+function wordCount(str) {
+    if (typeof str !== 'string') {
+        throw 'error: pass a string next time';
+    }
+
+    if (!str) return 0;
+    return str.split(' ').length;
+}
+
+
+
+describe('function wordCount', function () {
+    it('should return 0 if there are 0 words in a string', function () {
+        expect(wordCount('')).to.equal(0);
+    });
+
+    it('should return 1 if there is 1 word in a string', function () {
+        expect(wordCount('aa')).to.equal(1);
+    });
+
+    it('should return n if there are n words in a string', function () {
+        expect(wordCount('aa bbb cc')).to.equal(3);
+    });
+});
