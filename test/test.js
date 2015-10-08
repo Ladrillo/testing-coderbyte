@@ -164,8 +164,10 @@ describe('function letterChanges', function () {
 // Using the JavaScript language, have the function simpleAdding(num) add up all the numbers from 1 to num. For the test cases, the parameter num will be any number from 1 to 1000.
 
 function simpleAdding(num) {
+
+
     if (typeof num !== 'number' || num < 1 || num % 1 !== 0) {
-        throw 'error: please pass a integer greater than 0'
+        throw new Error('error: please pass a integer greater than 0');
     }
 
     var numbers = new Array(num);
@@ -185,6 +187,10 @@ describe('function simpleAdding', function () {
 
     it('should add all the numbers from 1 to the argument', function () {
         expect(simpleAdding(5)).to.equal(15);
+    });
+
+    it('should throw if no argument passed', function () {
+        expect(simpleAdding).to.throw(/error: please pass a integer greater than 0/);
     });
 });
 
@@ -421,7 +427,7 @@ function wordCount(str) {
     }
 
     if (!str) return 0;
-    return str.split(' ').length;
+    return str.trim().split(/[^A-Za-z0-9]/).length;
 }
 
 
@@ -444,5 +450,112 @@ describe('function wordCount', function () {
 // Using the JavaScript language, have the function exOh(str) take the str parameter being passed and return the string true if there is an equal number of x's and o's, otherwise return the string false. Only these two letters will be entered in the string, no punctuation or numbers. For example: if str is "xooxxxxooxo" then the output should return false because there are 6 x's and 5 o's.
 
 function exOh(str) {
+    if (typeof str !== 'string' || !str || str.match(/[^ox]/)) {
+        throw 'error: please enter a non-empty string with only "o" or "x" chars';
+    }
+    var xs = 0, os = 0;
 
+    if (str.match(/x/)) xs += str.match(/x/g).length;
+    if (str.match(/o/)) os += str.match(/o/g).length;
+
+    return xs === os ? 'true' : 'false';
 }
+
+
+describe('function exOh', function () {
+    it('should return "true" if there is an aqual number of xs and os', function () {
+        expect(exOh('xo')).to.equal('true');
+        expect(exOh('xoxo')).to.equal('true');
+    });
+
+    it('should return "false" if there is an unequal number of xs and os', function () {
+        expect(exOh('oxo')).to.equal('false');
+        expect(exOh('xoxox')).to.equal('false');
+    });
+});
+
+
+
+// Using the JavaScript language, have the function palindrome(str) take the str parameter being passed and return the string true if the parameter is a palindrome, (the string is the same forward as it is backward) otherwise return the string false. For example: "racecar" is also "racecar" backwards. Punctuation and numbers will not be part of the string.
+
+function palindrome(str) {
+    if (typeof str !== 'string' || !str) throw 'error: please pass non-empty string'
+
+    var reversed = [];
+    str.split('').forEach(function (e) {
+        return reversed.unshift(e);
+    });
+    return str === reversed.join('') ? 'true' : 'false';
+}
+
+
+describe('function palindrome', function () {
+    it('should return true is str is a palindrome', function () {
+        expect(palindrome('axa')).to.equal('true');
+        expect(palindrome('axaxa')).to.equal('true');
+    });
+
+    it('should return false is str is not a palindrome', function () {
+        expect(palindrome('axx')).to.equal('false');
+    });
+});
+
+
+
+// Using the JavaScript language, have the function arithGeo(arr) take the array of numbers stored in arr and return the string "Arithmetic" if the sequence follows an arithmetic pattern or return "Geometric" if it follows a geometric pattern. If the sequence doesn't follow either pattern return -1. An arithmetic sequence is one where the difference between each of the numbers is consistent, whereas in a geometric sequence, each term after the first is multiplied by some constant or common ratio. Arithmetic example: [2, 4, 6, 8] and Geometric example: [2, 6, 18, 54]. Negative numbers may be entered as parameters, 0 will not be entered, and no array will contain all the same elements.
+
+function allEqual(array) {
+    if (array.length === 1) return true;
+    if (array[0] !== array[1]) return false;
+    return allEqual(array.slice(1));
+}
+
+function arith(n, arr) {
+    if (arr.length === 1) return true;
+    if (arr[1] - arr[0] !== n) return false;
+    return arith(n, arr.slice(1));
+}
+
+function geom(n, arr) {
+    if (arr.length === 1) return true;
+    if (arr[1] / arr[0] !== n) return false;
+    return geom(n, arr.slice(1));
+}
+
+function arithGeo(arr) {
+    if (!(arr instanceof Array)) throw 'error: please pass an array holding at least three numbers';
+    if (arr.length < 3) throw 'error: please pass an array holding at least three numbers';
+    if (arr.some(function (e) { return e === 0; })) throw 'error: no zeroes allowed';
+    if (allEqual(arr)) throw 'error: all array elements can not be equal';
+
+    var inc = arr[1] - arr[0],
+        mult = arr[1] / arr[0];
+
+    if (arith(inc, arr)) return 'Arithmetic';
+    if (geom(mult, arr)) return 'Geometric';
+
+    return '-1';
+}
+
+
+describe('function arithGeo', function () {
+    it('should return "Arithmetic" if the array contains numbers in arithmetic progression', function () {
+        expect(arithGeo([1, 2, 3])).to.equal('Arithmetic');
+        expect(arithGeo([1, 2.5, 4])).to.equal('Arithmetic');
+        expect(arithGeo([1, 3, 5])).to.equal('Arithmetic');
+        expect(arithGeo([2, 5, 8, 11])).to.equal('Arithmetic');
+    });
+
+    it('should return "Geometric" if the array contains numbers in geometric progression', function () {
+        expect(arithGeo([1, -2, 4])).to.equal('Geometric');
+        expect(arithGeo([1, 1.5, 2.25])).to.equal('Geometric');
+        expect(arithGeo([1, 3, 9])).to.equal('Geometric');
+        expect(arithGeo([2, -6, 18, -54])).to.equal('Geometric');
+    });
+
+    it('should return "-1" if the array contains numbers not in arith or geom progressions', function () {
+        expect(arithGeo([1, 2, 3, 5])).to.equal('-1');
+        expect(arithGeo([1, 2, 3, 6])).to.equal('-1');
+        expect(arithGeo([2, 6, -18, 55])).to.equal('-1');
+    });
+});
