@@ -559,3 +559,94 @@ describe('function arithGeo', function () {
         expect(arithGeo([2, 6, -18, 55])).to.equal('-1');
     });
 });
+
+
+
+// Using the JavaScript language, have the function arrayAdditionI(arr) take the array of numbers stored in arr and return the string true if any combination of numbers in the array can be added up to equal the largest number in the array, otherwise return the string false. For example: if arr contains [4, 6, 23, 10, 1, 3] the output should return true because 4 + 6 + 10 + 3 = 23. The array will not be empty, will not contain all the same elements, and may contain negative numbers.
+
+function sortArray(arr) {
+    return arr.sort(function (a, b) {
+        if (a < b) return 1;
+        if (a > b) return -1;
+        return 0;
+    });
+}
+
+function arrayAdditionI(arr) {
+
+
+}
+
+// Using the JavaScript language, have the function letterCountI(str) take the str parameter being passed and return the first word with the greatest number of repeated letters. For example: "Today, is the greatest day ever!" should return greatest because it has 2 e's (and 2 t's) and it comes before ever which also has 2 e's. If there are no words with repeating letters return -1. Words will be separated by spaces.
+
+function StringBreakdown(str) {
+    var cleanStr = str.replace(/[^A-Za-z0-9]/g, ''),
+        that = this;
+
+    cleanStr.split('').forEach(function (char) {
+        if (that.hasOwnProperty(char)) {
+            that[char] += 1;
+        }
+        else {
+            that[char] = 1;
+        }
+    });
+}
+
+StringBreakdown.prototype = {
+
+    mostFrequentChar: function () {
+        var that = this;
+        return Object.keys(this).reduce(function (acc, k) {
+            return that[acc] >= that[k] ? acc : k;
+        });
+    },
+
+    leastFrequentChar: function () {
+        var that = this;
+        return Object.keys(this).reduce(function (acc, k) {
+            return that[acc] <= that[k] ? acc : k;
+        });
+    },
+
+    maxNumberOfRepetitions: function () {
+        var reps = [];
+        for (var p in this) {
+            if (this.hasOwnProperty(p)) {
+                reps.push(this[p]);
+            }
+        }
+        return reps.reduce(function (acc, e) {
+            return acc >= e ? acc : e;
+        });
+    },
+
+    minNumberOfRepetitions: function () {
+        var reps = [];
+        for (var p in this) {
+            if (this.hasOwnProperty(p)) {
+                reps.push(this[p]);
+            }
+        }
+        return reps.reduce(function (acc, e) {
+            return acc <= e ? acc : e;
+        });
+    }
+};
+
+
+function letterCountI(str) {
+
+
+}
+
+
+describe('letterCountI function ', function () {
+    it('should return the first word with a larger repeat index for a char', function () {
+        expect(letterCountI('aaxyz aaaxyz xyzaaaa uvwaaaa xyz a')).to.equal('xyzaaa');
+    });
+
+    it('should return "-1" if there are no works with repeated letters', function () {
+        expect(letterCountI('xyz mno uvw')).to.equal('-1');
+    });
+});
