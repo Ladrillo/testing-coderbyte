@@ -636,17 +636,27 @@ StringBreakdown.prototype = {
 
 
 function letterCountI(str) {
+    var splitStr = str.split(' ');
 
+    if (splitStr.every(function (e) {
+        var breakdown1 = new StringBreakdown(e);
+        return breakdown1.maxNumberOfRepetitions() === 1;
+    })) return '-1';
 
+    return splitStr.reduce(function (acc, e, i, arr) {
+        var breakDown2 = new StringBreakdown(acc);
+        var breakDown3 = new StringBreakdown(e);
+        return breakDown2.maxNumberOfRepetitions() >= breakDown3.maxNumberOfRepetitions() ? acc : e;
+    });
 }
 
 
 describe('letterCountI function ', function () {
     it('should return the first word with a larger repeat index for a char', function () {
-        expect(letterCountI('aaxyz aaaxyz xyzaaaa uvwaaaa xyz a')).to.equal('xyzaaa');
+        expect(letterCountI('aaxyz aaaxyz xyzaaaa uvwaaaa xyz a')).to.equal('xyzaaaa');
     });
 
-    it('should return "-1" if there are no works with repeated letters', function () {
+    it('should return "-1" if there are no words with repeated letters', function () {
         expect(letterCountI('xyz mno uvw')).to.equal('-1');
     });
 });
