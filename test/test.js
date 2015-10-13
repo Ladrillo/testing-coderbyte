@@ -564,13 +564,7 @@ describe('function arithGeo', function () {
 
 // Using the JavaScript language, have the function arrayAdditionI(arr) take the array of numbers stored in arr and return the string true if any combination of numbers in the array can be added up to equal the largest number in the array, otherwise return the string false. For example: if arr contains [4, 6, 23, 10, 1, 3] the output should return true because 4 + 6 + 10 + 3 = 23. The array will not be empty, will not contain all the same elements, and may contain negative numbers.
 
-function sortArray(arr) {
-    return arr.sort(function (a, b) {
-        if (a < b) return 1;
-        if (a > b) return -1;
-        return 0;
-    });
-}
+
 
 function arrayAdditionI(arr) {
 
@@ -658,5 +652,48 @@ describe('letterCountI function ', function () {
 
     it('should return "-1" if there are no words with repeated letters', function () {
         expect(letterCountI('xyz mno uvw')).to.equal('-1');
+    });
+});
+
+
+
+// Using the JavaScript language, have the function secondGreatLow(arr) take the array of numbers stored in arr and return the second lowest and second greatest numbers, respectively, separated by a space. For example: if arr contains [7, 7, 12, 98, 106] the output should be 12 98. The array will not be empty and will contain at least 2 numbers. It can get tricky if there's just two numbers!
+
+function sortArray(arr) {
+    return arr.sort(function (a, b) {
+        if (a < b) return -1;
+        if (a > b) return 1;
+        return 0;
+    });
+}
+
+function secondGreatLow(arr) {
+    var sorted = sortArray(arr);
+    return sorted[1] + ' ' + sorted[sorted.length - 2];
+}
+
+
+describe('function secondGreatLow', function () {
+    it('should return an array with the second lowest and the second greatest numbers', function () {
+        expect(secondGreatLow([1, 2, 3, 4, 5])).to.equal('2 4');
+    });
+});
+
+
+
+// Using the JavaScript language, have the function divisionStringified(num1,num2) take both parameters being passed, divide num1 by num2, and return the result as a string with properly formatted commas. If an answer is only 3 digits long, return the number with no commas (ie. 2 / 3 should output "1"). For example: if num1 is 123456789 and num2 is 10000 the output should be "12,345".
+
+function divisionStringified(num1, num2) {
+    return Math.floor(num1 / num2) + '';
+
+}
+
+describe('function divisionString', function () {
+    it('should remove decimals from result of division', function () {
+        expect(divisionStringified(125, 10)).to.equal('12');
+    });
+
+    it('should format comma in the thousands', function () {
+        expect(divisionStringified(10000, 10)).to.equal('1,000');
     });
 });
