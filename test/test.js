@@ -910,10 +910,109 @@ function thirdGreatest(arr) {
 }
 
 
-describe('function thirdGreatest', function () {
+xdescribe('function thirdGreatest', function () {
     it('should return the third longest string', function () {
         expect(thirdGreatest(['x', 'y', 'z', 'w'])).to.equal('z');
         expect(thirdGreatest(['x', 'y', 'z', 'ww'])).to.equal('y');
         expect(thirdGreatest(['x', 'yy', 'zzz', 'w'])).to.equal('x');
     });
 });
+
+
+// Using the JavaScript language, have the function powersOfTwo(num) take the num parameter being passed which will be an integer and return the string true if it's a power of two. If it's not return the string false. For example if the input is 16 then your program should return the string true but if the input is 22 then the output should be the string false.
+
+function powersOfTwo(num) {
+    if (num === 2) return true;
+    else if (num % 2 === 0) return powersOfTwo(num / 2);
+    else return false;
+}
+
+
+describe('function powersOfTwo', function () {
+    it('should return true if fed a number that is a power of two', function () {
+        expect(powersOfTwo(2)).to.equal(true);
+        expect(powersOfTwo(4)).to.equal(true);
+        expect(powersOfTwo(16)).to.equal(true);
+    });
+
+    it('should return false if fed a number that is not a power of two', function () {
+        expect(powersOfTwo(1)).to.equal(false);
+        expect(powersOfTwo(3)).to.equal(false);
+        expect(powersOfTwo(9)).to.equal(false);
+    });
+});
+
+    
+
+// Using the JavaScript language, have the function additivePersistence(num) take the num parameter being passed which will always be a positive integer and return its additive persistence which is the number of times you must add the digits in num until you reach a single digit. For example: if num is 2718 then your program should return 2 because 2 + 7 + 1 + 8 = 18 and 1 + 8 = 9 and you stop at 9.
+
+function addDigits(num) {
+    return String(num).split('').reduce(function (acc, e) {
+        return acc + Number(e); }, 0);
+}
+
+
+function additivePersistence(acc, num) {
+    if (addDigits(num) < 10) return acc;
+    else return additivePersistence(++acc, addDigits(num));
+}
+
+
+describe('helper function addDigits', function () {
+    it('should add up all digits in a number', function () {
+        expect(addDigits(1)).to.equal(1);
+        expect(addDigits(123)).to.equal(6);
+        expect(addDigits(1235)).to.equal(11);
+        expect(addDigits(12352)).to.equal(13);
+    });
+});
+
+
+describe('function additivePersistence', function () {
+    it('should return the additive persistence of a number', function () {
+        expect(additivePersistence(1, 12)).to.equal(1);
+        expect(additivePersistence(1, 128)).to.equal(2);
+        expect(additivePersistence(1, 1245)).to.equal(2);
+        expect(additivePersistence(1, 12781)).to.equal(3);
+        expect(additivePersistence(1, 197892)).to.equal(2);
+    });
+});
+
+
+
+// Using the JavaScript language, have the function multiplicativePersistence(num) take the num parameter being passed which will always be a positive integer and return its multiplicative persistence which is the number of times you must multiply the digits in num until you reach a single digit. For example: if num is 39 then your program should return 3 because 3 * 9 = 27 then 2 * 7 = 14 and finally 1 * 4 = 4 and you stop at 4.
+
+function multiplyDigits(num) {
+    return String(num).split('').reduce(function (acc, e) {
+        return acc * Number(e); }, 1);
+}
+
+function multiplicativePersistence(acc, num) {
+    if (multiplyDigits(num) < 10) return acc;
+    else return multiplicativePersistence(++acc, multiplyDigits(num));
+}
+
+
+describe('helper function multiplyDigits', function () {
+    it('should multiply digits in a number', function () {
+        expect(multiplyDigits(1)).to.equal(1);
+        expect(multiplyDigits(12)).to.equal(2);
+        expect(multiplyDigits(123)).to.equal(6);
+        expect(multiplyDigits(173)).to.equal(21);
+    });
+});
+
+describe('function multiplicativePersistence', function () {
+    it('should return the additive persistence of a number', function () {
+        expect(multiplicativePersistence(1, 12)).to.equal(1);
+        expect(multiplicativePersistence(1, 128)).to.equal(2);
+        expect(multiplicativePersistence(1, 1245)).to.equal(2);
+        expect(multiplicativePersistence(1, 12781)).to.equal(2);
+        expect(multiplicativePersistence(1, 999)).to.equal(4);
+    });
+});
+
+
+
+// Using the JavaScript language, have the function OffLineMinimum(strArr) take the strArr parameter being passed which will be an array of integers ranging from 1...n and the letter "E" and return the correct subset based on the following rules. The input will be in the following format: ["I","I","E","I",...,"E",...,"I"] where the I's stand for integers and the E means take out the smallest integer currently in the whole set. When finished, your program should return that new set with integers separated by commas. For example: if strArr is ["5","4","6","E","1","7","E","E","3","2"] then your program should return 4,1,5.
+
