@@ -10,8 +10,8 @@ chai.should();
 // Using the JavaScript language, have the function firstReverse(str) take the str parameter being passed and return the string in reversed order.
 
 function firstReverse(str) {
-    var reversed = [], i;
-    for (i = 0; i < str.length; i++) {
+    var reversed = [];
+    for (var i = 0; i < str.length; i++) {
         reversed.unshift(str[i]);
     }
     return reversed.join('');
@@ -211,7 +211,7 @@ function letterCapitalize(str) {
 
 describe('function letterCapitalize', function () {
     it('should capitalize the first letter of each word', function () {
-        expect(letterCapitalize('esto es una mierda')).to.equal('Esto Es Una Mierda')
+        expect(letterCapitalize('esto es una mierda')).to.equal('Esto Es Una Mierda');
     });
 });
 
@@ -689,17 +689,231 @@ function divisionStringified(num1, num2) {
 }
 
 describe('function divisionString', function () {
-    it('should remove decimals from result of division', function () {
+    xit('should remove decimals from result of division', function () {
         expect(divisionStringified(125, 10)).to.equal('12');
     });
 
-    it('should format comma in the thousands', function () {
+    xit('should format comma in the thousands', function () {
         expect(divisionStringified(10000, 10)).to.equal('1,000');
     });
 });
-hola
-
-QUE TAL ESTAS!!
 
 
-!
+
+// Using the JavaScript language, have the function countingMinutesI(str) take the str parameter being passed which will be two times (each properly formatted with a colon and am or pm) separated by a hyphen and return the total number of minutes between the two times. The time will be in a 12 hour clock format. For example: if str is 9:00am-10:00am then the output should be 60. If str is 1:00pm-11:00am the output should be 1320.
+
+
+function standardizeTime(str) {
+    var standardTime = [],
+        splitStr = str.split(/[^0-9]/);
+    if (/am/.test(str)) {
+        standardTime[0] = Number(splitStr[0]);
+        standardTime[1] = Number(splitStr[1]);
+    }
+    else if (/pm/.test(str)) {
+        standardTime[0] = Number(splitStr[0]) + 12;
+        standardTime[1] = Number(splitStr[1]);
+    }
+    return standardTime;
+}
+
+function minutesSinceMidnight(arr) {
+    return arr[0] * 60 + arr[1];
+}
+
+function countingMinutesI(str) {
+    var splitStr = str.split('-'),
+        minutes = [];
+
+    minutes[0] = minutesSinceMidnight(standardizeTime(splitStr[0]));
+    minutes[1] = minutesSinceMidnight(standardizeTime(splitStr[1]));
+
+    if (minutes[1] > minutes[0]) {
+        return minutes[1] - minutes[0];
+    }
+    return (24 * 60) - (minutes[0] - minutes[1]);
+}
+
+
+
+describe('helper function standardizeTime', function () {
+    it('should transform input am times into hours and minutes array with 24h format', function () {
+        expect(standardizeTime('1:00am')).to.eql([1, 0]);
+        expect(standardizeTime('7:30am')).to.eql([7, 30]);
+    });
+
+    it('should transform input pm times into hours and minutes array with 24h format', function () {
+        expect(standardizeTime('1:00pm')).to.eql([13, 0]);
+        expect(standardizeTime('7:30pm')).to.eql([19, 30]);
+    });
+});
+
+describe('helper function minutesSinceMidnight', function () {
+    it('should take a time array in the [h, m] 24h format and return number of minutes since last midnight', function () {
+        expect(minutesSinceMidnight([1, 0])).to.equal(60);
+        expect(minutesSinceMidnight([13, 1])).to.equal(781);
+    });
+});
+
+describe('function countingMinutesI', function () {
+    it('should give the difference in minutes from two formatted times when second time earlier', function () {
+        expect(countingMinutesI('1:01pm-11:00am')).to.equal(1319);
+        expect(countingMinutesI('1:00pm-11:00am')).to.equal(1320);
+        expect(countingMinutesI('1:00pm-11:01am')).to.equal(1321);
+    });
+
+    it('should give the difference in minutes from two formatted times when second time larger', function () {
+        expect(countingMinutesI('1:00am-2:01am')).to.equal(61);
+        expect(countingMinutesI('3:00pm-3:20pm')).to.equal(20);
+    });
+});
+
+
+
+// Using the JavaScript language, have the function meanMode(arr) take the array of numbers stored in arr and return 1 if the mode equals the mean, 0 if they don't equal each other (ie. [5, 3, 3, 3, 1] should return 1 because the mode (3) equals the mean (3)). The array will not be empty, will only contain positive integers, and will not contain more than one mode.
+
+function meanMode(arr) {
+
+
+}
+
+describe('function meanMode', function () {
+    xit('should work', function () {
+        expect(meanMode([5, 3, 3, 3, 1])).to.equal(1);
+    });
+});
+
+
+// Using the JavaScript language, have the function dashInsert(str) insert dashes ('-') between each two odd numbers in str. For example: if str is 454793 the output should be 4547-9-3. Don't count zero as an odd number.
+
+function centerSection(arr) {
+    return arr.slice(1, arr.length - 1);
+}
+
+function dashInsert(str) {
+    if (str.length < 3) return str;
+
+    var strSplit = str.split(''),
+        centerPartArr = centerSection(strSplit);
+
+    for (var i = 0; i < centerPartArr.length; i++) {
+        if (centerPartArr[i] % 2 !== 0) {
+            centerPartArr.splice(i, 1, '-' + centerPartArr[i] + '-');
+        }
+    }
+
+    centerPartArr.unshift(strSplit[0]);
+    centerPartArr.push(strSplit[strSplit.length - 1]);
+
+    return centerPartArr.join('').replace('--', '-');
+}
+
+
+describe('helper function centerSection', function () {
+    it('should return the given array from the second element to the second to last', function () {
+        expect(centerSection([1, 2, 3, 4])).to.eql([2, 3]);
+    });
+});
+
+describe('function dashInsert', function () {
+    it('should return the string with no changes if it is shorter than 3 chars', function () {
+        expect(dashInsert('1')).to.equal('1');
+        expect(dashInsert('12')).to.equal('12');
+    });
+
+    it('should surround odd numbers in the middle of a number with dashes', function () {
+        expect(dashInsert('213')).to.equal('2-1-3');
+        expect(dashInsert('223')).to.equal('223');
+    });
+
+    it('should prevent two dashes in a row', function () {
+        expect(dashInsert('2773')).to.equal('2-7-7-3');
+    });
+});
+
+
+
+// Using the JavaScript language, have the function swapCase(str) take the str parameter and swap the case of each character. For example: if str is "Hello World" the output should be hELLO wORLD. Let numbers and symbols stay the way they are.
+
+function swapCase(str) {
+    if (typeof str !== 'string' || !str) throw 'error: please pass a non-empty string';
+
+    if (!/[A-Za-z]/.test(str)) return str;
+
+    var newSplitStr = [];
+
+    str.split('').forEach(function (e) {
+        if (/[a-z]/.test(e)) newSplitStr.push(e.toUpperCase());
+        else if (/[A-Z]/.test(e)) newSplitStr.push(e.toLowerCase());
+    });
+
+    return newSplitStr.join('');
+}
+
+
+describe('function swapCase', function () {
+    it('should ignore symbols and spaces', function () {
+        expect(swapCase('.:3')).to.equal('.:3');
+    });
+
+    it('should invert capitalization of chars', function () {
+        expect(swapCase('AaBbCc')).to.equal('aAbBcC');
+    });
+});
+
+
+
+// Using the JavaScript language, have the function numberSearch(str) take the str parameter, search for all the numbers in the string, add them together, then return that final number. For example: if str is "88Hello 3World!" the output should be 91. You will have to differentiate between single digit numbers and multiple digit numbers like in the example above. So "55Hello" and "5Hello 5" should return two different answers. Each string will contain at least one letter or symbol.
+
+
+function extractNumbers(str) {
+    var splitStr = str.split(/[^0-9]/),
+        onlyNums = splitStr.filter(function (e) {
+            return e !== '';
+        });
+
+    for (var i in onlyNums) {
+        onlyNums[i] = Number(onlyNums[i]);
+    }
+
+    return onlyNums;
+}
+
+function numberSearch(str) {
+    return extractNumbers(str).reduce(function (acc, e) {
+        return acc + e;
+    });
+}
+
+describe('helper function extractNumbers', function () {
+    it('should take a string and return an array of numbers', function () {
+        expect(extractNumbers('33')).to.eql([33]);
+        expect(extractNumbers('x33x')).to.eql([33]);
+        expect(extractNumbers('33x2')).to.eql([33, 2]);
+        expect(extractNumbers('x33x2xxx1x')).to.eql([33, 2, 1]);
+    });
+});
+
+describe('function numberSearch', function () {
+    it('should add the numbers in a string', function () {
+        expect(numberSearch('x1xx11x')).to.equal(12);
+        expect(numberSearch('x1xx1x1x')).to.equal(3);
+    });
+});
+
+
+
+// Using the JavaScript language, have the function thirdGreatest(strArr) take the array of strings stored in strArr and return the third largest word within in. So for example: if strArr is ["hello", "world", "before", "all"] your output should be world because "before" is 6 letters long, and "hello" and "world" are both 5, but the output should be world because it appeared as the last 5 letter word in the array. If strArr was ["hello", "world", "after", "all"] the output should be after because the first three words are all 5 letters long, so return the last one. The array will have at least three strings and each string will only contain letters.
+
+function thirdGreatest(arr) {
+
+}
+
+
+describe('function thirdGreatest', function () {
+    it('should return the third longest string', function () {
+        expect(thirdGreatest(['x', 'y', 'z', 'w'])).to.equal('z');
+        expect(thirdGreatest(['x', 'y', 'z', 'ww'])).to.equal('y');
+        expect(thirdGreatest(['x', 'yy', 'zzz', 'w'])).to.equal('x');
+    });
+});
