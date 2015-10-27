@@ -1,5 +1,7 @@
 'use strict';
 
+var cosa = require('../script.js');
+
 var chai = require('chai'),
     expect = chai.expect;
 
@@ -48,13 +50,13 @@ function firstFactorial(num) {
     if (typeof num !== 'number') {
         throw "error: this function only works with numbers!"
     }
-    else if (num < 0) {
+    if (num < 0) {
         throw "error: this function doesn't work with negative numbers"
     }
-    else {
-        if (num === 0 || num === 1) return 1;
-        else return num * firstFactorial(num - 1);
-    }
+
+    if (num === 0 || num === 1) return 1;
+    else return num * firstFactorial(num - 1);
+
 }
 
 
@@ -308,10 +310,11 @@ function timeConvert(num) {
 
 describe('function timeConvert', function () {
     it('should convert integers to hours and minutes int the "h:m" format', function () {
-        expect(timeConvert(1)).to.equal('0:1');
-        expect(timeConvert(60)).to.equal('1:0');
+        expect(timeConvert(1)).to.equal('0:01');
+        expect(timeConvert(7)).to.equal('0:07');
+        expect(timeConvert(60)).to.equal('1:00');
         expect(timeConvert(90)).to.equal('1:30');
-        expect(timeConvert(120)).to.equal('2:0');
+        expect(timeConvert(120)).to.equal('2:00');
     });
 });
 
@@ -684,16 +687,21 @@ describe('function secondGreatLow', function () {
 // Using the JavaScript language, have the function divisionStringified(num1,num2) take both parameters being passed, divide num1 by num2, and return the result as a string with properly formatted commas. If an answer is only 3 digits long, return the number with no commas (ie. 2 / 3 should output "1"). For example: if num1 is 123456789 and num2 is 10000 the output should be "12,345".
 
 function divisionStringified(num1, num2) {
-    return Math.floor(num1 / num2) + '';
-
+    var numString = Math.floor(num1 / num2) + '';
+    if (numString.length > 3) {
+        var splitNumString = numString.split('');
+        splitNumString.splice(numString.length - 3, 0, ',');
+        return splitNumString.join('');
+    }
+    return numString;
 }
 
 describe('function divisionString', function () {
-    xit('should remove decimals from result of division', function () {
+    it('should remove decimals from result of division', function () {
         expect(divisionStringified(125, 10)).to.equal('12');
     });
 
-    xit('should format comma in the thousands', function () {
+    it('should format comma in the thousands', function () {
         expect(divisionStringified(10000, 10)).to.equal('1,000');
     });
 });
@@ -942,7 +950,7 @@ describe('function powersOfTwo', function () {
     });
 });
 
-    
+
 
 // Using the JavaScript language, have the function additivePersistence(num) take the num parameter being passed which will always be a positive integer and return its additive persistence which is the number of times you must add the digits in num until you reach a single digit. For example: if num is 2718 then your program should return 2 because 2 + 7 + 1 + 8 = 18 and 1 + 8 = 9 and you stop at 9.
 
@@ -1015,4 +1023,20 @@ describe('function multiplicativePersistence', function () {
 
 
 // Using the JavaScript language, have the function OffLineMinimum(strArr) take the strArr parameter being passed which will be an array of integers ranging from 1...n and the letter "E" and return the correct subset based on the following rules. The input will be in the following format: ["I","I","E","I",...,"E",...,"I"] where the I's stand for integers and the E means take out the smallest integer currently in the whole set. When finished, your program should return that new set with integers separated by commas. For example: if strArr is ["5","4","6","E","1","7","E","E","3","2"] then your program should return 4,1,5.
+
+function recursion(num) {
+    if (typeof num !== 'number' || num < 1 || num % 1 !== 0) {
+        throw 'error: please pass a positive integer';
+    }
+    if (num === 1) return 1;
+    else return num + recursion(num - 1);
+}
+
+function recursion2(acc, num) {
+    if (typeof num !== 'number' || num < 1 || num % 1 !== 0) {
+        throw 'error: please pass a positive integer';
+    }
+    if (num === 1) return acc;
+    else return recursion2(num + acc, num - 1);
+}
 
