@@ -1,5 +1,2 @@
-module.exports = {
-    cosa: function () {
-        return 'esto es una cosa';
-    }
-};
+require('./test/simple.js')();
+require('./test/intermediate.js')();
