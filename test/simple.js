@@ -218,17 +218,18 @@ module.exports = function () {
 
     function simpleSymbols(str) {
         if (typeof str !== 'string' || !/[a-zA-Z]/.test(str)) {
-            throw 'error: please pass at least one letter';
-        }
+            throw 'error: please pass at least one letter of the alphabet';
+        }   
 
-        var splitString = str.split('');
-        if (/[a-zA-Z]/.test(splitString[0]) || /[a-zA-Z]/.test(splitString[splitString.length - 1])) {
+        var splitStr = str.split('');
+        if (/[a-zA-Z]/.test(splitStr[0]) || /[a-zA-Z]/.test(splitStr[splitStr.length - 1])) {
             return 'false';
         }
 
-        var acceptable = splitString.every(function (e, i, arr) {
+        var acceptable = splitStr.every(function (e, i, arr) {
             return !/[a-zA-Z]/.test(e) || (/[a-zA-Z]/.test(e) && /\+/.test(arr[i - 1]) && /\+/.test(arr[i + 1]));
         });
+        
         return acceptable ? 'true' : 'false';
     }
 
