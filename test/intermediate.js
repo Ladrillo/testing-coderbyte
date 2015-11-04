@@ -155,7 +155,25 @@ module.exports = function () {
 
 
 
-    // Using the JavaScript language, have the function stringScramble(str1,str2) take both parameters being passed and return the string true if a portion of str1 characters can be rearranged to match str2, otherwise return the string false. For example: if str1 is "rkqodlw" and str2 is "world" the output should return true. Punctuation and symbols will not be entered with the parameters.
+    // Using the JavaScript language, have the function stringScramble(str1,str2) take both parameters being passed and return true if a portion of str1 characters can be rearranged to match str2, otherwise return false. For example: if str1 is "rkqodlw" and str2 is "world" the output should return true. Punctuation and symbols will not be entered with the parameters.
 
-    
+    function stringScramble(str1, str2) {
+
+        var strSplit1 = str1.split(''),
+            strSplit2 = str2.split('');
+
+        return strSplit2.every(function (e) {
+            return strSplit1.indexOf(e) !== -1;
+        });
+    }
+
+    describe('function stringScramble', function () {
+        it('should return true if all of the 2nd arg. chars are contained in the 1st', function () {
+            expect(stringScramble('rkqodlw', 'world')).to.equal(true);
+        });
+        it('should return false if not all of the 2nd arg. chars are contained in the 1st', function () {
+            expect(stringScramble('rkqodlw', 'worldx')).to.equal(false);
+        });
+    });
+
 };
