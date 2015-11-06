@@ -291,11 +291,11 @@ module.exports = function () {
 
 
 
-    // Using the JavaScript language, have the function timeConvert(num) take the num parameter being passed and return the number of hours and minutes the parameter converts to, in the 'digital' format (ie. if num = 63 then the output should be the string 1:03).
+    // Using the JavaScript language, have the function timeConvert(num) take the num parameter being passed and return the number of hours and minutes the parameter converts to (ie. if num = 63 then the output should be 1:3). Separate the number of hours and minutes with a colon.
 
     function timeConvert(num) {
-        if (typeof num !== 'number' || num % 1 !== 0 || num < 1) {
-            throw 'error: please pass a positive integer';
+        if (typeof num !== 'number' || num % 1 !== 0) {
+            throw 'error: please pass an integer';
         }
 
         var hours = Math.floor(num / 60) + "";
