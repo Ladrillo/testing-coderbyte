@@ -176,4 +176,110 @@ module.exports = function () {
         });
     });
 
+
+
+
+
+    // Using the JavaScript language, have the function arithGeoII(arr) take the array of numbers stored in arr and return the string "Arithmetic" if the sequence follows an arithmetic pattern or return "Geometric" if it follows a geometric pattern. If the sequence doesn't follow either pattern return -1. An arithmetic sequence is one where the difference between each of the numbers is consistent, where as in a geometric sequence, each term after the first is multiplied by some constant or common ratio. Arithmetic example: [2, 4, 6, 8] and Geometric example: [2, 6, 18, 54]. Negative numbers may be entered as parameters, 0 will not be entered, and no array will contain all the same elements.
+
+    function detectallEqual(arr) {
+
+        if (arr.length === 1) return false;
+        else if (arr[0] === arr[1]) detectallEqual(arr.slice(1));
+        else return true;
+    }
+
+    function arithGeoII(arr) {
+
+        if (!(arr instanceof Array) || arr.length < 3) {
+            throw 'error: please pass an Array of at least 3 integers (no zeroes allowed)';
+        }
+        if (arr.some(function (e) {
+            return typeof e !== 'number' || e === 0 || e % 1 !== 0;
+        })) {
+            throw 'error: please pass an Array of at least 3 integers (no zeroes allowed)';
+        }
+        if (!detectallEqual(arr)) {
+            throw 'error: array elements cannot be all the same';
+        }
+
+        var sum = arr[1] - arr[0], mult = arr[1] / arr[0];
+
+        if (arr.slice(0, -1).every(function (e, i, a) {
+            return arr[i + 1] - e === sum;
+        })) return "Arithmetic";
+
+        if (arr.slice(0, -1).every(function (e, i, a) {
+            return arr[i + 1] / e === mult;
+        })) return "Geometric";
+
+        else return '-1';
+    }
+
+    describe('function arithGeoII', function () {
+        it('should detect arithmetic sequences', function () {
+            expect(arithGeoII([1, 2, 3, 4])).to.equal("Arithmetic");
+            expect(arithGeoII([2, 4, 6, 8])).to.equal("Arithmetic");
+            expect(arithGeoII([-1, 2, 5, 8])).to.equal("Arithmetic");
+            expect(arithGeoII([1, -2, -5, -8])).to.equal("Arithmetic");
+        });
+        it('should detect geometric sequences', function () {
+            expect(arithGeoII([1, 2, 4, 8])).to.equal("Geometric");
+            expect(arithGeoII([1, -2, 4, -8])).to.equal("Geometric");
+            expect(arithGeoII([-1, -3, -9, -27])).to.equal("Geometric");
+        });
+        it('should return -1 if no sequence is detected', function () {
+            expect(arithGeoII([1, 2, 6, 4])).to.equal('-1');
+        });
+    });
+
+
+
+    // Using the JavaScript language, have the function arrayAddition(arr) take the array of numbers stored in arr and return the string true if any combination of numbers in the array can be added up to equal the largest number in the array, otherwise return the string false. For example: if arr contains [4, 6, 23, 10, 1, 3] the output should return true because 4 + 6 + 10 + 3 = 23. The array will not be empty, will not contain all the same elements, and may contain negative numbers.
+
+    function makeGroupsOfOne(arr) {
+        var first = [];
+        for (var i in arr) {
+            first.push([arr[i]]);
+        }
+        return first;
+    }
+
+    function addOne(arr) {
+        var newArr = [];
+        arr.forEach(function (e, i, a) {
+            var k = i + 1;
+            while (k < arr.length) {
+                newArr = newArr.concat([e.concat(arr[k])]);
+                k += 1;
+            }
+        });
+        return newArr;
+    }
+
+    function extractCombinations(arr) {
+        var newArr = arr;
+        
+    }
+
+
+    describe('helper function makeGroupsOfOne', function () {
+        it('should make groups of 1 element', function () {
+            expect(makeGroupsOfOne([1, 2, 3, 4])).to.eql([[1], [2], [3], [4]]);
+
+        });
+    });
+
+    describe('helper function addOne', function () {
+        it('should create combinations one elem bigger', function () {
+            expect(addOne([[1], [2], [3], [4]])).to.eql([[1, 2], [1, 3], [1, 4], [2, 3], [2, 4], [3, 4]]);
+        });
+    });
+
+    describe('helper function extractCombinations', function () {
+        it('should create all combinations from an array of arrays', function () {
+            expect(extractCombinations([[1], [2], [3], [4]])).to.eql([[1, 2], [1, 3], [1, 4], [2, 3], [2, 4], [3, 4], [1, 2, 3], [1, 2, 4], [1, 3, 4], [2, 3, 4], [1, 2, 3, 4]]);
+        });
+    });
+
 };
