@@ -291,11 +291,11 @@ module.exports = function () {
 
 
 
-    // Using the JavaScript language, have the function timeConvert(num) take the num parameter being passed and return the number of hours and minutes the parameter converts to (ie. if num = 63 then the output should be 1:3). Separate the number of hours and minutes with a colon.
+    // Using the JavaScript language, have the function timeConvert(num) take the num parameter being passed and return the number of hours and minutes the parameter converts to, in the 'digital' format (ie. if num = 63 then the output should be the string 1:03).
 
     function timeConvert(num) {
-        if (typeof num !== 'number' || num % 1 !== 0) {
-            throw 'error: please pass an integer';
+        if (typeof num !== 'number' || num % 1 !== 0 || num < 1) {
+            throw 'error: please pass a positive integer';
         }
 
         var hours = Math.floor(num / 60) + "";
@@ -346,7 +346,7 @@ module.exports = function () {
 
 
 
-    // Using the JavaScript language, have the function ABCheck(str) take the str parameter being passed and return the string true if the characters a and b are separated by exactly 3 places anywhere in the string at least once (ie. "lane borrowed" would result in true because there is exactly three characters between a and b). Otherwise return the string false.
+    // Using the JavaScript language, have the function ABCheck(str) take the str parameter being passed and return the string true if the characters a and b, in that order, are separated by exactly 3 places anywhere in the string at least once (ie. "lane borrowed" would result in true because there is exactly three characters -that aren't a or b- between a and b). Otherwise return the string false.
 
     function ABCheck(str) {
         if (typeof str !== 'string') {
