@@ -1,2 +1,3 @@
-require('./test/simple.js')();
-require('./test/intermediate.js')();
+// require('./test/simple')();
+// require('./test/intermediate')();
+require('./test/codewars')();
