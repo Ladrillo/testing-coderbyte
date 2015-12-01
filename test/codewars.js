@@ -18,7 +18,7 @@ module.exports = function () {
         }
         return arr;
     }
-    
+
 
     function stringChunk(str, n) {
 
@@ -26,7 +26,7 @@ module.exports = function () {
         if (str.length <= n) return [str];
         return [].concat(str.slice(0, n), stringChunk(str.slice(n), n));
     }
-    
+
 
     describe('function stringChunk', function () {
         it('should return empty array when n < 1', function () {
@@ -48,6 +48,27 @@ module.exports = function () {
     
     
     // An isogram is a word that has no repeating letters, consecutive or non-consecutive. Implement a function that determines whether a string that contains only letters is an isogram. Assume the empty string is an isogram. Ignore letter case.
+    
 
+    function isIsogram(str) {
+        
+        var splitStr = str.toLowerCase().split('');
+        if (splitStr.length === 0) return true;
+        if (splitStr.slice(1).indexOf(splitStr[0]) !== -1) return false;
+        return isIsogram(str.slice(1));
+    }
+
+
+    describe('function isIsogram', function () {
+        it('should return true for the empty string', function () {
+            expect(isIsogram('')).to.be.true;
+        });
+        it('should return true if isogram', function () {
+            expect(isIsogram('aeiou')).to.equal(true);
+        });
+        it('should return false if not isogram', function () {
+            expect(isIsogram('aeioAu')).to.equal(false);
+        });
+    });
 
 };
